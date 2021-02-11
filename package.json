@@ -3,25 +3,18 @@
 	"version": "1.5.0",
 	"description": "Concise and fast javascript templating compatible with nodejs and other javascript environments",
 	"keywords": [
-		"template",
-		"fast",
-		"simple",
-		"templating"
+		"template", "fast", "simple", "templating"
 	],
 	"main": "index.js",
 	"browser": "doT.js",
-	"bin": {
-		"dottojs": "./bin/dot-packer"
-	},
 	"license": "MIT",
 	"scripts": {
-		"build": "uglifyjs doT.js -o doT.min.js -c -m --preamble '/* Laura Doktorova https://github.com/olado/doT */'"
+		"build": "npx gulp"
 	},
-	"dependencies": {},
 	"devDependencies": {
-		"commander": "*",
-		"mkdirp": "*",
-		"uglify-js": "*"
+		"gulp": "^4.0.2",
+		"gulp-babel": "^8.0.0",
+		"gulp-uglify": "^3.0.2"
 	},
 	"repository": "https://github.com/alex2844/js-global-dot-html.git",
 	"author": "Laura Doktorova <ldoktorova@gmail.com>"
