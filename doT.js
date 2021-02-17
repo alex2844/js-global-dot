@@ -62,6 +62,9 @@ function resolveDefs(c, block, def) {
 			return v ? resolveDefs(c, v, def) : v;
 		});
 }
+function unescape(code) {
+	return code.replace(/\\('|\\)/g, "$1").replace(/[\r\t\n]/g, " ");
+}
 
 function template(tmpl, c, def) {
 	// var str = tmpl.replace(new RegExp('<!--\\?js', 'g'), '<\?js').replace(new RegExp('\\?-->', 'g'), '\?>').replace(/<!--(.*?)-->/gs, '');
@@ -105,6 +108,6 @@ const doT = {
 }
 
 if (typeof(window) == 'object')
-	window.XML = doT;
+	window.doT = doT;
 if (typeof(module) == 'object')
 	module.exports = doT;

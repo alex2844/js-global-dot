@@ -89,14 +89,14 @@ InstallDots.prototype.compileAll = function() {
 		k, l, name;
 	for (k = 0, l = sources.length; k < l; k++) {
 		name = sources[k];
-		if (/\.def(\.dot|\.jst)?$/.test(name)) {
+		if (/\.def(\.dot|\.jst|\.html)?$/.test(name)) {
 			console.log('Loaded def '+name);
 			this.__includes[name.substring(0, name.indexOf('.'))] = readdata(defFolder+name);
 		}
 	}
 	for (k = 0, l = sources.length; k < l; k++) {
 		name = sources[k];
-		if (/\.dot(\.def|\.jst)?$/.test(name)) {
+		if (/\.dot(\.def|\.jst|\.html)?$/.test(name)) {
 			console.log('Compiling '+name+' to function');
 			this.__rendermodule[name.substring(0, name.indexOf('.'))] = this.compilePath(defFolder+name);
 		}
