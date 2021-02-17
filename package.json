@@ -3,7 +3,10 @@
 	"version": "1.5.0",
 	"description": "Concise and fast javascript templating compatible with nodejs and other javascript environments",
 	"keywords": [
-		"template", "fast", "simple", "templating"
+		"template",
+		"fast",
+		"simple",
+		"templating"
 	],
 	"main": "index.js",
 	"browser": "doT.js",
@@ -12,6 +15,8 @@
 		"build": "npx gulp"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.12.16",
+		"@babel/preset-env": "^7.12.16",
 		"gulp": "^4.0.2",
 		"gulp-babel": "^8.0.0",
 		"gulp-uglify": "^3.0.2"
