@@ -13,7 +13,7 @@ const config = {
 	define: /(?:\<\?js|\{\{)#\s*([\w\.$]+)\s*(\:|=)([\s\S]+?)(?:;\s*\?\>|\}\})/g, // <?js# ;?> || {{# }}
 	defineParams: /^\s*([\w$]+):([\s\S]+)/,
 	varname: '$this',
-	strip: true
+	strip: !true
 };
 
 function encodeHTMLSource() {
@@ -33,7 +33,8 @@ function encodeHTMLSource() {
 
 function resolveDefs(c, block, def) {
 	return ((typeof block === 'string') ? block : block.toString())
-		// .replace(new RegExp('<!--\\?js', 'g'), '<\?js').replace(new RegExp('\\?-->', 'g'), '\?>').replace(/<!--(.*?)-->/gs, '')
+		// .replace(new RegExp('<!--\\?js', 'g'), '<\?js').replace(new RegExp('\\?-->', 'g'), '\?>')
+		// .replace(/<!--(.*?)-->/gs, '')
 		.replace(c.define, (_, code, assign, value) => {
 			if (code.indexOf('def.') === 0)
 				code = code.substring(4);
@@ -75,6 +76,7 @@ function template(tmpl, c, def) {
 		str  = resolveDefs(c, tmpl, def || {});
 	str = (
 		"var out='"+(c.strip ? str.replace(/(^|\r|\n)\t* +| +\t*(\r|\n|$)/g, " ").replace(/\r|\n|\t|\/\*[\s\S]*?\*\//g,"") : str)
+		.replace(/<!--(.*?)-->/gs, '')
 		.replace(/'|\\/g, "\\$&")
 		.replace(c.interpolate, (_, code) => "'+("+unescape(code)+")+'")
 		.replace(c.encode, (_, code) => {
@@ -87,7 +89,7 @@ function template(tmpl, c, def) {
 	.replace(/\n/g, "\\n").replace(/\t/g, '\\t').replace(/\r/g, "\\r")
 	.replace(/(\s|;|\}|^|\{)out\+='';/g, '$1').replace(/\+''/g, "");
 	if ((typeof module !== 'undefined' && module.exports) || (typeof define === 'function' && define.amd))
-		str = 'var { location, navigator } = $this.global || {};'+str;
+		str = 'var { location, navigator } = $this && $this.global || {};'+str;
 	if (needhtmlencode)
 		str = 'var encodeHTML = typeof _encodeHTML !== "undefined" ? _encodeHTML : ('+encodeHTMLSource.toString()+'());'+str;
 	try {
