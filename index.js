@@ -22,7 +22,7 @@ function InstallDots(o) {
 	this.__global = o.global || "window.render";
 	this.__rendermodule = o.rendermodule || {};
 	this.__settings = Object.prototype.hasOwnProperty.call(o, 'config') ? copy(o.config, copy(doT.config)) : undefined;
-	this.__includes = {};
+	this.__includes = o.includes || {};
 }
 
 InstallDots.prototype.compileToFile = function(path, template, def) {
@@ -93,7 +93,7 @@ InstallDots.prototype.compileAll = function(sources) {
 	var k, l, name;
 	if (sources === undefined) {
 		console.log('Compiling all doT templates...');
-		sources = fs.readdirSync(this.__path);
+		sources = fs.readdirSync(this.__path).filter(f => !f.startsWith('_'));
 	}
 	for (k = 0, l = sources.length; k < l; k++) {
 		name = sources[k];

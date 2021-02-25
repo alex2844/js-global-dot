@@ -13,7 +13,7 @@ const config = {
 	define: /(?:\<\?js|\{\{)#\s*([\w\.$]+)\s*(\:|=)([\s\S]+?)(?:;\s*\?\>|\}\})/g, // <?js# ;?> || {{# }}
 	defineParams: /^\s*([\w$]+):([\s\S]+)/,
 	varname: '$this',
-	strip: !true
+	strip: true
 };
 
 function encodeHTMLSource() {
@@ -70,9 +70,8 @@ function unescape(code) {
 function template(tmpl, c, def) {
 	// var str = tmpl.replace(new RegExp('<!--\\?js', 'g'), '<\?js').replace(new RegExp('\\?-->', 'g'), '\?>').replace(/<!--(.*?)-->/gs, '');
 	c = c || doT.config;
-	let needhtmlencode,
+	let needhtmlencode, indv,
 		sid = 0,
-		indv,
 		str  = resolveDefs(c, tmpl, def || {});
 	str = (
 		"var out='"+(c.strip ? str.replace(/(^|\r|\n)\t* +| +\t*(\r|\n|$)/g, " ").replace(/\r|\n|\t|\/\*[\s\S]*?\*\//g,"") : str)
