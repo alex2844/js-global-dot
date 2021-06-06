@@ -27,7 +27,7 @@ function encodeHTMLSource() {
 	}
 	const matchHTML = /&(?!#?\w+;)|<|>|"|'|\//g;
 	return function(s) {
-		return ((s || (typeof(s) == 'number')) ? s.toString().replace(matchHTML, m => (encodeHTMLRules[m] || m)) : '');
+		return (s ? s.toString().replace(matchHTML, m => (encodeHTMLRules[m] || m)) : '');
 	}
 };
 
