@@ -63,10 +63,6 @@ function resolveDefs(c, block, def) {
 			return v ? resolveDefs(c, v, def) : v;
 		});
 }
-function unescape(code) {
-	return code.replace(/\\('|\\)/g, "$1").replace(/[\r\t\n]/g, " ");
-}
-
 function template(tmpl, c, def) {
 	// var str = tmpl.replace(new RegExp('<!--\\?js', 'g'), '<\?js').replace(new RegExp('\\?-->', 'g'), '\?>').replace(/<!--(.*?)-->/gs, '');
 	c = c || doT.config;
@@ -77,12 +73,12 @@ function template(tmpl, c, def) {
 		"var out='"+(c.strip ? str.replace(/(^|\r|\n)\t* +| +\t*(\r|\n|$)/g, " ").replace(/\r|\n|\t|\/\*[\s\S]*?\*\//g,"") : str)
 		.replace(/<!--(.*?)-->/gs, '')
 		.replace(/'|\\/g, "\\$&")
-		.replace(c.interpolate, (_, code) => "'+("+unescape(code)+")+'")
+		.replace(c.interpolate, (_, code) => "'+("+code.replace(/\\('|\\)/g, "$1").replace(/[\r\t\n]/g, " ")+")+'")
 		.replace(c.encode, (_, code) => {
 			needhtmlencode = true;
-			return "'+encodeHTML("+unescape(code)+")+'";
+			return "'+encodeHTML("+code.replace(/\\('|\\)/g, "$1").replace(/[\r\t\n]/g, " ")+")+'";
 		})
-		.replace(c.evaluate, (_, code) => "';"+unescape(code)+"out+='")
+		.replace(c.evaluate, (_, code) => "';"+code.replace(/\\('|\\)/g, "$1").replace(/[\r\t\n]/g, " ")+"out+='")
 		+"';return out;"
 	)
 	.replace(/\n/g, "\\n").replace(/\t/g, '\\t').replace(/\r/g, "\\r")
