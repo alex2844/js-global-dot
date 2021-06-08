@@ -1,6 +1,6 @@
 {
 	"name": "js-global-dot",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"description": "Concise and fast javascript templating compatible with nodejs and other javascript environments",
 	"keywords": [
 		"template",
